@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>培训需求管理系统</title>
+  <link rel="stylesheet" href="../css/layui.css">
+	<script src="../gethost.js" type="text/javascript"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">培训需求管理系统</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+   
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          turbo
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+          <dd><a href="">安全设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">需求管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="allnaire.html">所有问卷</a></dd>
+            <dd><a href="myWritten.html">我的填写</a></dd>
+            <dd><a href="myPush.html">我的发布</a></dd>
+            <dd><a href="push.html" style="background-color: #009E94;">新建问卷</a></dd>
+          </dl>
+        </li>
+        
+        <li class="layui-nav-item"><a href="">个人中心</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+	<div>
+    <div style="padding: 15px;">	
+		<fieldset class="layui-elem-field site-demo-button" >
+		  <legend style="margin:auto;">新建需求问卷</legend>
+		  <div style="float: right;">
+			<button type="button" class="layui-btn layui-btn-radius" id="addNaire" name="load">创建问卷</button>
+			<button type="button" class="layui-btn layui-btn-disabled layui-btn-radius" id="addRadio" name="reloadadd">新增单选</button>
+			<button type="button" class="layui-btn layui-btn-disabled layui-btn-radius" id="addCheckBox" name="reloadadd">新增多选</button>
+			<button type="button" class="layui-btn layui-btn-disabled layui-btn-radius" id="addQA" name="reloadadd">新增问答</button>
+			<button type="button" class="layui-btn layui-btn-disabled layui-btn-radius" id="del" name="reloaddel">删除选中</button>
+			<button type="button" class="layui-btn layui-btn-disabled layui-btn-radius" id="delAll" name="reloaddel">清空所有</button>
+		  </div>
+		</fieldset>
+	</div>
+	</div>	
+	<div class="content" id="mainContent">
+		
+			
+	<div>
+		
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    © layui.com - 底部固定区域
+  </div>
+</div>
+
+
+
+
+
+
+ 
+
+
+
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element','layer','form', function(){
+  var element = layui.element;
+  
+});
+
+
+layui.use('form', function(){
+  var form = layui.form;
+});
+// $('#addRadioOption').on('click', function(){
+// 		$('#radioBox').append('<div style="padding-left: 108px;padding-top: 15px;"><div id="radioOption" class="layui-input-inline"><input style="width:600px" type="text"  name="username" lay-verify="required" placeholder="请输入选项" autocomplete="off" class="layui-input"></div>	</div>')
+// 	});
+//问卷表单
+var naireOnload = 
+'<div class="layui-input-inline" style="padding-left:50px;padding-top:15px;">'+
+	'<div class="layui-inline"><label class="layui-form-label">问卷标题	</label></div>'+
+	'<div class="layui-inline"><input type="text" id="naire_title" name="title" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" style="width:400px;"></div>'+
+'</div>'+
+'<div class="layui-input-inline" style="padding-left:50px;padding-top:15px;">'+
+	'<div class="layui-inline"><label class="layui-form-label">介绍	</label></div>'+
+	'<div class="layui-inline"><textarea id="naire_introduce" placeholder="请输入内容" class="layui-textarea" style="width:400px;height:200px;"></textarea></div>'+
+'</div>';
+
+//单选新增表单        单选新增表单     单选新增表单     单选新增表单    单选新增表单
+var addRadio = 
+'<div class="layui-input-inline" style="padding-left:50px;padding-top:15px;">'+
+	'<div class="layui-inline"><label class="layui-form-label">问题	</label></div>'+
+	'<div class="layui-inline"><input type="text" id="que_title" name="title" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" style="width:400px;"></div>'+
+'</div>'+
+'<div class="layui-input-inline" style="padding-left:50px;padding-top:15px;">'+
+	'<div class="layui-inline"><label class="layui-form-label">选项1	</label></div>'+
+	'<div class="layui-inline"><input type="text" id="option1" name="title" lay-verify="required" placeholder="选填" autocomplete="off" class="layui-input" style="width:400px;"></div>'+
+'</div>'+
+'<div class="layui-input-inline" style="padding-left:50px;padding-top:15px;">'+
+	'<div class="layui-inline"><label class="layui-form-label">选项2	</label></div>'+
+	'<div class="layui-inline"><input type="text" id="option2" name="title" lay-verify="required" placeholder="选填" autocomplete="off" class="layui-input" style="width:400px;"></div>'+
+'</div>'+
+'<div class="layui-input-inline" style="padding-left:50px;padding-top:15px;">'+
+	'<div class="layui-inline"><label class="layui-form-label">选项3	</label></div>'+
+	'<div class="layui-inline"><input type="text" id="option3" name="title" lay-verify="required" placeholder="选填" autocomplete="off" class="layui-input" style="width:400px;"></div>'+
+'</div>'+
+'<div class="layui-input-inline" style="padding-left:50px;padding-top:15px;">'+
+	'<div class="layui-inline"><label class="layui-form-label">选项4	</label></div>'+
+	'<div class="layui-inline"><input type="text" id="option4" name="title" lay-verify="required" placeholder="选填" autocomplete="off" class="layui-input" style="width:400px;"></div>'+
+'</div>';
+//新增多选表单
+var addCheckBox = addRadio;
+//新增问答表单
+var addQA = 
+'<div class="layui-input-inline" style="padding-left:50px;padding-top:15px;">'+
+	'<div class="layui-inline"><label class="layui-form-label">问题	</label></div>'+
+	'<div class="layui-inline"><input type="text" id="que_title" name="title" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" style="width:400px;"></div>'+
+'</div>';
+
+//页面加载----------创建问卷
+$(document).ready(function(){
+	
+	createNaire();
+});
+
+//新增问卷            新增问卷         新增问卷        新增问卷       新增问卷
+$(document).on('click',"#addNaire",function(){
+	createNaire();
+	// if (is_naire_exist == true) {
+	// 	$('button[name="reloadadd"]').removeClass();
+	// 	$('button[name="reloadadd"]').addClass('layui-btn layui-btn-radius ');
+	// 	$('button[name="reloaddel"]').removeClass();
+	// 	$('button[name="reloaddel"]').addClass('layui-btn layui-btn-danger layui-btn-radius');
+	// }
+	
+});
+
+//新增单选按钮---------------新增单选-------------------新增单选-----------------新增单选-------
+$(document).on('click',"#addRadio",function(){
+	if (is_naire_exist == false){
+		return false;
+	}
+	layer.open({
+		type: 1,
+		title:"新增单选",
+		skin: 'layui-layer-rim', //加上边框
+		area: ['800px', '500px'], //宽高
+		btn: ['确认','取消'],
+		yes: function(index,layero){
+			//var question_title = window[index].callbackdata();
+			var title = $('#que_title').val();
+			var options = [$('#option1').val(),$('#option2').val(),$('#option3').val(),$('#option4').val()];
+			//模态框表单添加单选问题及选项
+			addRadioQuestion(naire_id,title,options);
+				
+			layer.close(index);
+			layer.msg('确定', {icon: 1});
+		},
+		btn2: function(){
+			layer.msg('操作取消', {icon: 1});
+		},
+		content: addRadio
+	});
+	//$('.layui-form').append()
+});
+
+//新增多选按钮---------------新增多选-------------------新增多选-----------------新增多选-------
+$(document).on('click',"#addCheckBox",function(){
+	if (is_naire_exist == false){
+		return false;
+	}
+	layer.open({
+		type: 1,
+		title: "新增多选",
+		skin: 'layui-layer-rim', //加上边框
+		area: ['800px', '500px'], //宽高
+		btn: ['确认','取消'],
+		yes: function(index,layero){
+			//var question_title = window[index].callbackdata();
+			var title = $('#que_title').val();
+			var options = [$('#option1').val(),$('#option2').val(),$('#option3').val(),$('#option4').val()];
+			//模态框表单添加单选问题及选项
+			addCheckBoxQuestion(naire_id,title,options);
+				
+			layer.close(index);
+			layer.msg('确定', {icon: 1});
+		},
+		btn2: function(){
+			layer.msg('操作取消', {icon: 1});
+		},
+		content: addCheckBox
+	});
+	//$('.layui-form').append()
+});
+
+//新增问答按钮------------新增问答--------------新增问答------------新增问答---------新增问答
+$(document).on('click',"#addQA",function(){
+	if (is_naire_exist == false){
+		return false;
+	}
+	layer.open({
+		type: 1,
+		skin: 'layui-layer-rim', //加上边框
+		area: ['700px', '500px'], //宽高
+		btn: ['确认','取消'],
+		yes: function(index,layero){
+			//var question_title = window[index].callbackdata();
+			var title = $('#que_title').val();
+			//模态框表单添加单选问题及选项
+			addTextQuestion(naire_id,title);
+				
+			layer.close(index);
+			layer.msg('确定', {icon: 1});
+		},
+		btn2: function(){
+			layer.msg('操作取消', {icon: 1});
+		},
+		content: addQA
+	});
+	//$('.layui-form').append()
+});
+/*     旧版新增单选 舍弃 
+$(document).on('click',"#addRadioOption",function(){
+	$('#radioBox').append('<div style="padding-left: 108px;padding-top: 15px;">'+
+							'<div id="radioOption" class="layui-input-inline">'+
+								'<input style="width:600px" type="text"  name="username" lay-verify="required" placeholder="请输入选项" autocomplete="off" class="layui-input">'+
+							'</div>'+
+						'</div>')
+});	 */
+// $(document).focus('click',"#delRadioOption",function(){
+// 	$('#radioOption:last').remove()
+// });
+
+
+var is_naire_exist = false;
+function createNaire(){
+	layui.use('layer', function(){
+		var layer = layui.layer;
+		layer.open({
+			type: 1,
+			title:"创建问卷",
+			skin: 'layui-layer-rim', //加上边框
+			area: ['700px', '400px'], //宽高
+			btn: ['确认'],
+			yes: function(index,layero){
+				//var question_title = window[index].callbackdata();
+				var title = $('#naire_title').val();
+				var introduce = $('#naire_introduce').val();
+				var token = window.localStorage["token"];
+				if(token == null){
+					alert("没有登录，不能下单");
+					window.location.href="login.html";
+					return false;
+				}
+				//true 非空 false 空
+				if(CheckIsNullOrEmpty(title) == false) {
+						lert('请输入问卷标题');
+					return false;
+				}
+				if(CheckIsNullOrEmpty(introduce) == false) {
+					alert('请输入问卷介绍');
+					return false;
+				}
+				is_naire_exist = true;
+				$('button[name="reloadadd"]').removeClass();
+				$('button[name="reloadadd"]').addClass('layui-btn layui-btn-radius ');
+				$('button[name="reloaddel"]').removeClass();
+				$('button[name="reloaddel"]').addClass('layui-btn layui-btn-danger layui-btn-radius');
+				doaddNaire(title,introduce,token);//添加问卷
+				layer.close(index);//关闭模态框
+				layer.msg('创建成功', {icon: 1});
+			},
+			content: naireOnload
+		});
+	});
+}
+
+
+
+//定义问卷id      定义问卷id       定义问卷id        定义问卷id        定义问卷id      定义问卷id
+var naire_id = "";
+//添加问卷函数      添加问卷函数    添加问卷函数    添加问卷函数    添加问卷函数   添加问卷函数
+function doaddNaire(title,introduce,token){	
+	$.ajax({
+		type:"POST",
+		url:"http://"+g_host+"/naire/add",
+		data:{
+			"title":title,
+			"introduce":introduce,
+			"type":"测试",
+			"token":token
+		},
+		xhrFields:{withCredentials:true},
+		success:function(data){
+			if(data.status == "success"){
+				naire_id = data.data;
+				onloadDom(naire_id);
+			}else{
+				alert("获取问卷信息失败，原因为"+data.data.errMsg);
+				if(data.data.errCode == 20003){
+					window.location.href="../index.html";
+					return false;
+				}
+			}
+		},
+		error:function(data){
+			alert("获取问卷信息失败失败，原因为"+data.responseText);
+		}
+	});
+}
+//添加问卷后首加载   添加问卷后首加载   添加问卷后首加载   添加问卷后首加载
+function onloadDom(e){
+	$.ajax({
+		type:"GET",
+		url:"http://"+g_host+"/naire/content",
+		data:{"naireId":e},
+		xhrFields:{withCredentials:true},
+		success:function(data){
+			if(data.status == "success"){
+				naire = data.data;
+				questionVOList = data.data.questionVOList;
+				showreloadDom();
+				listen();
+			}else{
+				alert("获取问卷信息失败，原因为"+data.data.errMsg);
+			}
+		},
+		error:function(data){
+			alert("获取问卷信息失败失败，原因为"+data.responseText);
+		}
+	});
+}
+//添加单选问题监听函数---------------------添加单选问题监听函数---------------添加单选问题监听函数
+function addRadioQuestion(naire_id,title,options){
+	$.ajax({
+		type:"POST",
+		url:"http://"+g_host+"/que/addCheck	",
+		data:{
+			"naireId":naire_id,
+			"title":title,
+			"type":1,
+			"options":options
+		},
+		xhrFields:{withCredentials:true},
+		success:function(data){
+			if(data.status == "success"){
+				reloadDom(naire_id);
+				listen();
+			}else{
+				alert("获取问卷信息失败，原因为"+data.data.errMsg);
+			}
+		},
+		error:function(data){
+			alert("获取问卷信息失败失败，原因为"+data.responseText);
+		}
+	});
+}
+
+//添加多选问题监听函数      添加多选问题监听函数      添加多选问题监听函数     添加多选问题监听函数
+function addCheckBoxQuestion(naire_id,title,options){
+	$.ajax({
+		type:"POST",
+		url:"http://"+g_host+"/que/addCheck",
+		data:{
+			"naireId":naire_id,
+			"title":title,
+			"type":2,
+			"options":options
+		},
+		xhrFields:{withCredentials:true},
+		success:function(data){
+			if(data.status == "success"){
+				reloadDom(naire_id);
+				listen();
+			}else{
+				alert("获取问卷信息失败，原因为"+data.data.errMsg);
+			}
+		},
+		error:function(data){
+			alert("获取问卷信息失败失败，原因为"+data.responseText);
+		}
+	});
+}
+
+//添加问答问题监听函数      添加问答问题监听函数      添加问答问题监听函数     添加问答问题监听函数
+function addTextQuestion(naire_id,title,options){
+	$.ajax({
+		type:"POST",
+		url:"http://"+g_host+"/que/addQA",
+		data:{
+			"naireId":naire_id,
+			"title":title,
+			"type":3
+		},
+		xhrFields:{withCredentials:true},
+		success:function(data){
+			if(data.status == "success"){
+				reloadDom(naire_id);
+				listen();
+			}else{
+				alert("获取问卷信息失败，原因为"+data.data.errMsg);
+			}
+		},
+		error:function(data){
+			alert("获取问卷信息失败失败，原因为"+data.responseText);
+		}
+	});
+}
+
+//添加选项后再加载
+var naire = "";
+var questionVOList = [];
+function reloadDom(e){
+	$.ajax({
+		type:"GET",
+		url:"http://"+g_host+"/naire/content",
+		data:{"naireId":e},
+		xhrFields:{withCredentials:true},
+		success:function(data){
+			if(data.status == "success"){
+				naire = data.data;
+				questionVOList = data.data.questionVOList;
+				showreloadDom();
+				listen();
+			}else{
+				alert("获取问卷信息失败，原因为"+data.data.errMsg);
+				
+			}
+		},
+		error:function(data){
+			alert("获取问卷信息失败失败，原因为"+data.responseText);
+		}
+	});
+}	
+	
+function showreloadDom(){
+	//清空主题内容重加载
+	$("#mainContent").empty();
+	
+	var naireVO = naire;
+		
+		//问卷标题及介绍
+		var list =
+		'<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">'+
+			  '<legend style="margin-left:400px;">问卷标题:'+naireVO.title+'</legend>'+
+		'</fieldset>'+
+		'<blockquote class="layui-elem-quote"><p style="padding-left:50px;">问卷介绍:'+naireVO.introduce+'</p></blockquote>';
+		
+		$("#mainContent").append($(list));
+		
+		//遍历问题
+		for(var i = 0; i < questionVOList.length; i++){
+			var vo = questionVOList[i];
+		
+		//问题描述
+			var title_list =
+			"<div style='padding:10px 0 10px 100px;'><p style='font-size:20px'>"+(i+1)+"."+vo.title+"</p></div>";
+			$("#mainContent").append($(title_list));
+			
+			//遍历选项
+			for(var j = 0; j < vo.queOptions.length; j++){
+				if(vo.type == "1") {
+					var option_list =
+					 "<div class='layui-form-item' style='font-size:14px;padding:10px 0 0 130px;'><table><tr><input type='radio' id='radio' name='radio"+(i+1)+"' value='"+vo.queOptions[j].content+"' class='test-radio1'>"+"</tr><tr>"+vo.queOptions[j].content+"</tr></table></div>"
+				}else if (vo.type == "2") {
+					var option_list =
+					 "<div class='layui-form-item' style='font-size:14px;padding:10px 0 0 130px;'><table><tr><input type='checkbox' id='checkbox' name='checkbox"+(i+1)+"' value='"+vo.queOptions[j].content+"' lay-skin='primary' >"+"</tr><tr>"+vo.queOptions[j].content+"</tr></table></div>"
+				}
+				$("#mainContent").append($(option_list));
+			}
+			
+			if (vo.queOptions.length == 0 && vo.type == "3") {
+				var option_list = "<div class='layui-form-item' style='font-size:14px;padding:10px 0 0 130px;'><textarea placeholder='请输入内容' id='text' name='text"+(i+1)+"' class='layui-textarea' width:800px;></textarea></div>"
+				$("#mainContent").append($(option_list));
+			}
+				
+			
+		}
+		if(questionVOList.length == 0) {
+			var submitbutton = ""
+		}else {
+			var submitbutton = "<button type='button' class='layui-btn layui-btn-radius' id='submitAnswer' style='margin-left:500px;'>提交</button>";
+		}
+		$("#mainContent").append($(submitbutton));		
+}
+
+
+
+//判断数据是否为Null或者undefined或者为空字符串
+function CheckIsNullOrEmpty(value) {
+	//正则表达式用于判斷字符串是否全部由空格或换行符组成
+  var reg = /^\s*$/
+  //返回值为true表示是非空字符串
+  return (value != null && value != undefined && !reg.test(value))
+}
+</script>
+</body>	  
+</html>

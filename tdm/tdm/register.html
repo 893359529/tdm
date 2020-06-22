@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>首页-培训需求管理系统</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+		<script src="./gethost.js" type="text/javascript"></script>
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+	<style>
+		* {
+			text-align: center;
+		}
+		.carousel-inner img {
+			width: 40%;
+			height: 40%;
+		}
+		.form-control {
+			width:300px;
+			margin: auto;
+		}
+		.jumbotron {
+			margin:30px auto;
+			height: 500px;
+			}
+		#title {
+			font-family: "microsoft yahei";
+		}
+		a:hover {
+			color:red;
+			text-decoration:underline;
+		}
+		a:active {text-decoration:underline;}
+		.carousel slide{
+			width:100px;
+		}
+		.carousel-inner img {
+			margin: 20px auto;
+		  width: 100%;
+		  height: 300px;
+		}
+		#formMoudle {
+			margin-top: 30px;
+		}
+		.form-control {
+			height:34px;
+			font-size: 16px;
+		}
+		.ontext {
+			font-size: 16px;
+		}
+		#icon {
+			float: left;
+			height:47px;
+			margin-left: 100px;
+		}
+	</style>
+  </head>
+  <body>
+	  <div style="text-align:right; width: 95%; margin-top: 5px;;">
+		  <img src="img/timg.jpg" id = "icon"/>
+		  <a href="" style="font-size: 13px;">联系我们</a>
+	  </div>
+	<div class="jumbotron">
+		
+		<div id="demo" class="carousel slide" data-ride="carousel" style="width:50%; height: 400px; margin-left: 30px; float: left;">
+ 
+		  <!-- 指示符 -->
+		  <ul class="carousel-indicators">
+			<li data-target="#demo" data-slide-to="0" class="active"></li>
+			<li data-target="#demo" data-slide-to="1"></li>
+			<li data-target="#demo" data-slide-to="2"></li>
+		  </ul>
+		 
+		  <!-- 轮播图片 -->
+		  <div class="carousel-inner">
+			<div class="carousel-item active">
+			  <img src="img/cjdx.jpg">
+			</div>
+			<div class="carousel-item">
+			  <img src="img/cjdx2.jpg">
+			</div>
+			<div class="carousel-item">
+			  <img src="img/cjdx3.jpg">
+			</div>
+		  </div>
+		 
+		  <!-- 左右切换按钮 -->
+		  <a class="carousel-control-prev" style="margin: auto auto;" href="#demo" data-slide="prev">
+			<span class="carousel-control-prev-icon"></span>
+		  </a>
+		  <a class="carousel-control-next" style="margin: auto auto;" href="#demo" data-slide="next">
+			<span class="carousel-control-next-icon"></span>
+		  </a>
+		 
+		</div>
+		
+		
+		
+		
+		
+		<!-- <img src="img/cjdx.jpg" alt="..." class="img-circle" style="float: left; width: 40%; margin-left: 100px;"> -->
+	  <div id = "formMoudle" >
+		  <h2 id = "title" align="center" style="font-weight: 400;font-size: 30px;">注册</h2>
+		  <h4 id = "title" align="center" style="font-weight: 400;">Training demand management system</h4>
+		  <br />
+		  
+			  <div class="form-group">
+				<label for="exampleInputEmail1" class="ontext">账号</label>
+				<input type="text" class="form-control" id="username" placeholder="Account">
+			  </div>
+			  
+			  <div class="form-group">
+				<label for="exampleInputPassword1" class="ontext">密码</label>
+				<input type="password" class="form-control" id="password" placeholder="Password">
+			  </div>
+			  
+			  
+			  
+			  <button type="submit" class="btn btn-default" id="login">
+			  	去登录
+			  </button>
+			  
+			  <button type="submit" class="btn btn-default" id="register">
+					注册
+				</button>
+		  
+	  </div>
+	</div>
+	<div>鄂ICP备20007282号 &nbsp;&nbsp;&nbsp; © 2020 turbocq.com &nbsp;版权所有长江大学管理学院 &nbsp;&nbsp; 信管1702 陈祺</div>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+	
+	
+	<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>	
+  </body>
+	<script>
+		$(document).ready(function(){
+
+			$("#login").on("click",function(){
+				window.location.href="index.html";
+			});
+				
+
+
+			$("#register").on("click",function(){
+				var username = $("#username").val();
+				var password = $("#password").val();
+				if(username == null || username == ""){
+					alert("账号不能为空");
+					return false;
+				}
+				if(password == null || password == ""){
+					alert("密码不能为空");
+					return false;
+				}
+		
+
+				$.ajax({
+					type:"POST",
+					contentType:"application/x-www-form-urlencoded",
+					url:"http://"+g_host+"/register",
+					data:{
+						"username":username,
+						"password":password
+					},
+					xhrFields:{withCredentials:true},
+					success:function(data){
+						if(data.status == "success"){
+							window.location.href="index.html";
+						}else{
+							alert("注册失败，原因为"+data.data.errMsg);
+						}
+					},
+					error:function(data){
+						alert("注册失败，原因为"+data.responseText);
+					}
+				});
+				return false;
+			});
+
+
+	});
+	</script>
+</html>
