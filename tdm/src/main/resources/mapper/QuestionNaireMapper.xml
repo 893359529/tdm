@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cjdx.mapper.QuestionNaireMapper" >
+  <resultMap id="BaseResultMap" type="com.cjdx.pojo.QuestionNaire" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="is_published" property="isPublished" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="QuestionVO" type="com.cjdx.pojo.VO.QuestionVO">
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+
+    <collection property="queOptionList" ofType="com.cjdx.pojo.QueOption">
+      <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="content" property="content" jdbcType="VARCHAR" />
+      <result column="question_id" property="questionId" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+
+  <resultMap id="QuestionAndAnswerVO" type="com.cjdx.pojo.VO.QuestionAndAnswerVO">
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <collection property="answerList" ofType="String">
+      <result column="content" property="content" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+  <select id="queryNaireContentById" resultMap="QuestionVO">
+    select b.title,b.type,c.*
+    from question as b
+    left JOIN que_option as c
+    on b.id = c.question_id
+    where b.naire_id = #{naireId}
+  </select>
+
+  <select id="queryQuestionAndAnswer" resultMap="QuestionAndAnswerVO">
+    select b.title,b.type,c.content
+    from question as b
+    left JOIN answer as c
+    on b.id = c.question_id
+    where c.naire_id = #{naireId} and user_id = #{userId}
+  </select>
+
+  <select id="queryAllNaire" resultMap="BaseResultMap">
+    SELECT * FROM question_naire WHERE is_published = 1
+    and id NOT IN (SELECT naire_id FROM user_naire WHERE operator_id = #{userId})
+  </select>
+
+  <select id="queryNaireByTitle" resultMap="BaseResultMap">
+    SELECT * FROM question_naire WHERE is_published = 1 AND
+    <bind name="title" value="'%' + title + '%'"/>
+    title like #{title}
+  </select>
+
+  <select id="queryMyPushedNaire" resultMap="BaseResultMap">
+    SELECT * FROM question_naire WHERE user_id = #{userId} AND is_published = 1
+  </select>
+
+  <select id="queryMyNotPushNaire" resultMap="BaseResultMap">
+    SELECT * FROM question_naire WHERE user_id = #{userId} AND is_published = 0
+  </select>
+
+  <select id="queryMyNaire" resultMap="BaseResultMap">
+    SELECT * FROM question_naire WHERE user_id = #{userId}
+  </select>
+
+  <update id="updatePublishStateToYes" parameterType="Integer">
+    UPDATE question_naire SET is_published = 1 WHERE id = #{naireId}
+  </update>
+
+  <update id="updatePublishStateToNo" parameterType="Integer">
+    UPDATE question_naire SET is_published = 0 WHERE id = #{naireId}
+  </update>
+
+</mapper>
